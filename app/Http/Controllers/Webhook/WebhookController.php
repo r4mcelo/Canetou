@@ -6,12 +6,15 @@ use App\Http\Controllers\Controller;
 use App\Jobs\ProcessAutentiqueWebhook;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Log;
 
 class WebhookController extends Controller
 {
     public function receive(Request $request, string $provider): Response
     {
-        if (! isset($provider)) {
+        Log::info('[WebhookController]: provider ' . $provider);
+
+        if (!isset($provider)) {
             return response('Necessário definir um provedor para o webhook', 403);
         }
 
