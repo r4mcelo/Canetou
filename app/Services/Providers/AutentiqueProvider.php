@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Autentique;
+namespace App\Services\Providers\Autentique;
 
 use App\Services\Contracts\SignatureProviderInterface;
 use Illuminate\Support\Facades\Http;
@@ -13,7 +13,8 @@ class AutentiqueProvider implements SignatureProviderInterface
     public function __construct(
         private readonly string $apiKey,
         private readonly bool $sandbox = false
-    ) {}
+    ) {
+    }
 
     public function createDocument(string $name, array $signers, string $fileContent, string $fileName, array $options = []): array
     {
@@ -72,7 +73,7 @@ class AutentiqueProvider implements SignatureProviderInterface
         return [
             'external_id' => $data['id'],
             'status' => 'pending',
-            'signers' => collect($data['signatures'])->map(fn ($s) => [
+            'signers' => collect($data['signatures'])->map(fn($s) => [
                 'external_id' => $s['public_id'],
                 'name' => $s['name'],
                 'email' => $s['email'],
@@ -107,8 +108,8 @@ class AutentiqueProvider implements SignatureProviderInterface
 
         $signers = $data['signatures'];
         $total = count($signers);
-        $signedCount = collect($signers)->filter(fn ($s) => $s['signed'])->count();
-        $refusedCount = collect($signers)->filter(fn ($s) => $s['rejected'])->count();
+        $signedCount = collect($signers)->filter(fn($s) => $s['signed'])->count();
+        $refusedCount = collect($signers)->filter(fn($s) => $s['rejected'])->count();
 
         $status = match (true) {
             $refusedCount > 0 => 'refused',
@@ -120,7 +121,7 @@ class AutentiqueProvider implements SignatureProviderInterface
             'external_id' => $data['id'],
             'status' => $status,
             'signed_pdf_url' => $data['files']['signed'] ?? null,
-            'signers' => collect($signers)->map(fn ($s) => [
+            'signers' => collect($signers)->map(fn($s) => [
                 'external_id' => $s['public_id'],
                 'name' => $s['name'],
                 'email' => $s['email'],
@@ -178,11 +179,11 @@ class AutentiqueProvider implements SignatureProviderInterface
 
         $json = $response->json();
 
-        if (! empty($json['errors'])) {
+        if (!empty($json['errors'])) {
             throw new RuntimeException($json['errors'][0]['message']);
         }
 
-        if (! array_key_exists($key, $json['data'] ?? [])) {
+        if (!array_key_exists($key, $json['data'] ?? [])) {
             throw new RuntimeException("Chave '{$key}' ausente na resposta do Autentique.");
         }
 

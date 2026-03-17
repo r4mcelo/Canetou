@@ -4,7 +4,7 @@ namespace App\Actions;
 
 use App\Models\Document;
 use App\Models\WebhookLog;
-use App\Services\Autentique\AutentiqueProvider;
+use App\Services\Providers\Autentique\AutentiqueProvider;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use RuntimeException;
