@@ -43,7 +43,7 @@ class AuthenticateTenant
     {
         return response()->json([
             'message' => 'API key inválida ou ausente.',
-            'code'    => 'UNAUTHORIZED',
+            'code' => 'UNAUTHORIZED',
         ], 401);
     }
 }

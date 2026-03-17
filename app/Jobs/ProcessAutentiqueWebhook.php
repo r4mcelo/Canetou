@@ -24,12 +24,12 @@ class ProcessAutentiqueWebhook implements ShouldQueue
 
     public function handle(ForwardWebhookAction $forwardAction): void
     {
-        $event     = $this->payload['event'] ?? [];
-        $eventId   = $event['id'] ?? null;
+        $event = $this->payload['event'] ?? [];
+        $eventId = $event['id'] ?? null;
         $eventType = $event['type'] ?? null;
 
         if (! $eventId || ! $eventType) {
-            Log::warning('ProcessAutentiqueWebhook: payload sem event.id ou event.type', $this->payload);
+            Log::warning('[ProcessAutentiqueWebhook]: payload sem event.id ou event.type', $this->payload);
 
             return;
         }
@@ -43,33 +43,33 @@ class ProcessAutentiqueWebhook implements ShouldQueue
         }
 
         $log = WebhookLog::create([
-            'tenant_id'         => null,
-            'document_id'       => null,
-            'direction'         => 'inbound',
-            'event_type'        => $eventType,
+            'tenant_id' => null,
+            'document_id' => null,
+            'direction' => 'inbound',
+            'event_type' => $eventType,
             'external_event_id' => $eventId,
-            'payload'           => $this->payload,
-            'attempt'           => 1,
+            'payload' => $this->payload,
+            'attempt' => 1,
         ]);
 
         $document = $this->resolveDocument($event, $eventType);
 
         if (! $document) {
-            Log::warning("ProcessAutentiqueWebhook: documento não encontrado para evento {$eventType}", $event);
+            Log::warning("[ProcessAutentiqueWebhook]: documento não encontrado para evento {$eventType}", $event);
 
             return;
         }
 
         $log->update([
-            'tenant_id'   => $document->tenant_id,
+            'tenant_id' => $document->tenant_id,
             'document_id' => $document->id,
         ]);
 
         match ($eventType) {
-            'document.finished'   => $this->handleFinished($document),
-            'signature.rejected'  => $this->handleRejected($document),
-            'document.deleted'    => $this->handleDeleted($document),
-            default               => Log::info("ProcessAutentiqueWebhook: evento desconhecido '{$eventType}'"),
+            'document.finished' => $this->handleFinished($document),
+            'signature.rejected' => $this->handleRejected($document),
+            'document.deleted' => $this->handleDeleted($document),
+            default => Log::info("[ProcessAutentiqueWebhook]: evento desconhecido '{$eventType}'"),
         };
 
         if (in_array($eventType, ['document.finished', 'signature.rejected', 'document.deleted'])) {
@@ -79,7 +79,7 @@ class ProcessAutentiqueWebhook implements ShouldQueue
 
     public function failed(\Throwable $e): void
     {
-        Log::error('ProcessAutentiqueWebhook falhou', [
+        Log::error('[ProcessAutentiqueWebhook]: falhou', [
             'message' => $e->getMessage(),
             'payload' => $this->payload,
         ]);
@@ -89,7 +89,7 @@ class ProcessAutentiqueWebhook implements ShouldQueue
     {
         $externalId = match ($eventType) {
             'signature.rejected' => $event['data']['document'] ?? null,
-            default              => $event['data']['id'] ?? null,
+            default => $event['data']['id'] ?? null,
         };
 
         if (! $externalId) {
@@ -102,7 +102,7 @@ class ProcessAutentiqueWebhook implements ShouldQueue
     private function handleFinished(Document $document): void
     {
         $document->update([
-            'status'    => 'signed',
+            'status' => 'signed',
             'signed_at' => now(),
         ]);
     }

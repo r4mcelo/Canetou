@@ -20,8 +20,8 @@ class TenantApiKey extends Model
     {
         return [
             'last_used_at' => 'datetime',
-            'expires_at'   => 'datetime',
-            'active'       => 'boolean',
+            'expires_at' => 'datetime',
+            'active' => 'boolean',
         ];
     }
 

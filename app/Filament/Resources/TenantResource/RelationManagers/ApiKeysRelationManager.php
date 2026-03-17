@@ -66,8 +66,8 @@ class ApiKeysRelationManager extends RelationManager
                         $token = Str::random(64);
 
                         $this->getOwnerRecord()->apiKeys()->create([
-                            'key'        => hash('sha256', $token),
-                            'name'       => $data['name'],
+                            'key' => hash('sha256', $token),
+                            'name' => $data['name'],
                             'expires_at' => $data['expires_at'] ?? null,
                         ]);
 
@@ -75,11 +75,11 @@ class ApiKeysRelationManager extends RelationManager
                             ->title('Chave gerada — copie agora!')
                             ->body(new HtmlString(
                                 '<p style="font-size:0.8rem;color:#6b7280;margin-bottom:0.5rem">'
-                                . 'Esta chave <strong>não será exibida novamente</strong>. Copie antes de fechar.</p>'
-                                . '<code style="display:block;background:#f3f4f6;padding:0.6rem;border-radius:6px;'
-                                . 'font-size:0.7rem;word-break:break-all;line-height:1.6;">'
-                                . e($token)
-                                . '</code>'
+                                .'Esta chave <strong>não será exibida novamente</strong>. Copie antes de fechar.</p>'
+                                .'<code style="display:block;background:#f3f4f6;padding:0.6rem;border-radius:6px;'
+                                .'font-size:0.7rem;word-break:break-all;line-height:1.6;">'
+                                .e($token)
+                                .'</code>'
                             ))
                             ->persistent()
                             ->success()

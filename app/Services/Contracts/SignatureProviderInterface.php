@@ -24,10 +24,10 @@ interface SignatureProviderInterface
      */
     public function createDocument(
         string $name,
-        array  $signers,
+        array $signers,
         string $fileContent,
         string $fileName,
-        array  $options = []
+        array $options = []
     ): array;
 
     /**

@@ -22,7 +22,7 @@ class Tenant extends Model
         return [
             'provider_api_key' => 'encrypted',
             'provider_sandbox' => 'boolean',
-            'active'           => 'boolean',
+            'active' => 'boolean',
         ];
     }
 

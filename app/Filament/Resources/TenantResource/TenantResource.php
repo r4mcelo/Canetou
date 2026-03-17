@@ -69,7 +69,6 @@ class TenantResource extends Resource
             ])->columns(2)
                 ->columnSpanFull(),
 
-
             Section::make('Webhook de Retorno')->schema([
                 TextInput::make('webhook_url')
                     ->label('URL do Webhook')
@@ -83,7 +82,7 @@ class TenantResource extends Resource
                     ->password()
                     ->revealable()
                     ->helperText('Use para validar a assinatura HMAC-SHA256 no header X-Hub-Signature.')
-                    ->columnSpanFull()
+                    ->columnSpanFull(),
             ])
                 ->columnSpanFull(),
         ]);

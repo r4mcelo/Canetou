@@ -24,9 +24,9 @@ class Document extends Model
     protected function casts(): array
     {
         return [
-            'signers'           => 'array',
+            'signers' => 'array',
             'provider_response' => 'array',
-            'signed_at'         => 'datetime',
+            'signed_at' => 'datetime',
         ];
     }
 

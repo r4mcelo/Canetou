@@ -7,15 +7,12 @@ use App\Models\Document;
 use App\Services\Contracts\SignatureProviderInterface;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Validator;
 use RuntimeException;
 
 class DocumentController extends Controller
 {
-    public function __construct(private readonly SignatureProviderInterface $provider)
-    {
-    }
+    public function __construct(private readonly SignatureProviderInterface $provider) {}
 
     public function store(Request $request): JsonResponse
     {
@@ -36,7 +33,7 @@ class DocumentController extends Controller
 
         $signers = json_decode($request->input('signers'), true);
 
-        if (!is_array($signers)) {
+        if (! is_array($signers)) {
             return response()->json([
                 'message' => 'O campo signers deve ser um JSON válido.',
                 'code' => 'VALIDATION_ERROR',
@@ -92,7 +89,7 @@ class DocumentController extends Controller
             ->where('tenant_id', $request->tenant->id)
             ->first();
 
-        if (!$document) {
+        if (! $document) {
             return $this->notFound();
         }
 
@@ -125,7 +122,7 @@ class DocumentController extends Controller
             ->where('tenant_id', $request->tenant->id)
             ->first();
 
-        if (!$document) {
+        if (! $document) {
             return $this->notFound();
         }
 
@@ -145,7 +142,7 @@ class DocumentController extends Controller
             ], 502);
         }
 
-        if (!$url) {
+        if (! $url) {
             return response()->json([
                 'message' => 'O PDF assinado ainda não está disponível.',
                 'code' => 'SIGNED_FILE_NOT_READY',
@@ -161,7 +158,7 @@ class DocumentController extends Controller
             ->where('tenant_id', $request->tenant->id)
             ->first();
 
-        if (!$document) {
+        if (! $document) {
             return $this->notFound();
         }
 
@@ -186,7 +183,7 @@ class DocumentController extends Controller
             ->where('tenant_id', $request->tenant->id)
             ->first();
 
-        if (!$document) {
+        if (! $document) {
             return $this->notFound();
         }
 

@@ -34,17 +34,17 @@ class AdminPanelProvider extends PanelProvider
             ->brandLogoHeight('5.5rem')
             ->colors([
                 // UI chrome: sidebar, fundos, bordas, textos — cinza com leve toque azulado
-                'gray'    => Color::Slate,
+                'gray' => Color::Slate,
                 // #15B2E5 — azul ciano da marca, botões e realces
                 'primary' => Color::hex('#15B2E5'),
                 // Verde clássico — confirmações, status "assinado"
                 'success' => Color::hex('#16A34A'),
                 // Vermelho sólido — erros, deletar, status "recusado"
-                'danger'  => Color::hex('#DC2626'),
+                'danger' => Color::hex('#DC2626'),
                 // Laranja — alertas, status "pendente"
                 'warning' => Color::hex('#EA580C'),
                 // Azul cobalto — informativo, distinto do ciano primário
-                'info'    => Color::hex('#2563EB'),
+                'info' => Color::hex('#2563EB'),
             ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\Filament\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\Filament\Pages')
