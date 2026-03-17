@@ -3,7 +3,7 @@
 namespace App\Providers;
 
 use App\Models\User;
-use App\Services\Providers\Autentique\AutentiqueProvider;
+use App\Services\Providers\AutentiqueProvider;
 use App\Services\Contracts\SignatureProviderInterface;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;

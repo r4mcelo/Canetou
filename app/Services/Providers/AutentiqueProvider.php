@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Providers\Autentique;
+namespace App\Services\Providers;
 
 use App\Services\Contracts\SignatureProviderInterface;
 use Illuminate\Support\Facades\Http;
